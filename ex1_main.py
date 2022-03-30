@@ -50,27 +50,27 @@ def main():
     img_path = 'beach.jpg'
 
     # Basic read and display
-    imDisplay(img_path, LOAD_GRAY_SCALE)
-    imDisplay(img_path, LOAD_RGB)
+    # imDisplay(img_path, LOAD_GRAY_SCALE)
+    # imDisplay(img_path, LOAD_RGB)
 
     # Convert Color spaces
-    img = imReadAndConvert(img_path, LOAD_RGB)
-    yiq_img = transformRGB2YIQ(img)
-    f, ax = plt.subplots(1, 2)
-    ax[0].imshow(img)
-    ax[1].imshow(yiq_img)
-    plt.show()
+    # img = imReadAndConvert(img_path, LOAD_RGB)
+    # yiq_img = transformRGB2YIQ(img)
+    # f, ax = plt.subplots(1, 2)
+    # ax[0].imshow(img)
+    # ax[1].imshow(yiq_img)
+    # plt.show()
 
     # Image histEq
     histEqDemo(img_path, LOAD_GRAY_SCALE)
     histEqDemo(img_path, LOAD_RGB)
 
     # Image Quantization
-    quantDemo(img_path, LOAD_GRAY_SCALE)
-    quantDemo(img_path, LOAD_RGB)
+    # quantDemo(img_path, LOAD_GRAY_SCALE)
+    # quantDemo(img_path, LOAD_RGB)
 
     # Gamma
-    gammaDisplay(img_path, LOAD_GRAY_SCALE)
+    # gammaDisplay(img_path, LOAD_GRAY_SCALE)
 
 
 if __name__ == '__main__':

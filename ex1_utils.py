@@ -13,6 +13,7 @@ import sys
 from typing import List
 from cv2 import cv2 as cv
 import numpy as np
+from matplotlib import pyplot as plt
 from cv2 import IMREAD_COLOR, IMREAD_GRAYSCALE
 
 LOAD_GRAY_SCALE = 1
@@ -35,11 +36,12 @@ def imReadAndConvert(filename: str, representation: int) -> np.ndarray:
     :param representation: GRAY_SCALE or RGB
     :return: The image object
     """
-    img = None
+    img = cv.imread(filename)
     if representation == 1:
-        img = cv.imread(filename, IMREAD_GRAYSCALE)
+        # img = cv.imread(filename, IMREAD_GRAYSCALE)
+        img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     elif representation == 2:
-        img = cv.imread(filename, IMREAD_COLOR)
+        img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
     if img is None:
         sys.exit("Could not read the image.")
     img = img.astype(np.float)
@@ -55,8 +57,14 @@ def imDisplay(filename: str, representation: int):
     :return: None
     """
     img = imReadAndConvert(filename, representation)
-    cv.imshow(filename, img)
-    cv.waitKey(0)
+    # cv.imshow(filename, img)
+    # cv.waitKey(0)
+    if representation == 1:
+        plt.imshow(img, cmap='gray')
+        plt.show()
+    else:
+        plt.imshow(img)
+        plt.show()
 
 
 def transformRGB2YIQ(imgRGB: np.ndarray) -> np.ndarray:
@@ -84,86 +92,38 @@ def transformYIQ2RGB(imgYIQ: np.ndarray) -> np.ndarray:
     return RGB_img
 
 
-# def hsitogramEqualize(imgOrig: np.ndarray) -> (np.ndarray, np.ndarray, np.ndarray):
-#     """
-#         Equalizes the histogram of an image
-#         :param imgOrig: Original Histogram
-#         :ret
-#     """
-#     original_shape = imgOrig.shape
-#     color = False
-#     if len(original_shape) == 3:  # it's RGB scale img
-#         YIQimg = transformRGB2YIQ(imgOrig)
-#         tmpMat = YIQimg[:, :, 0] * 255
-#         color = True
-#     else:  # it's Gray scale img
-#         tmpMat = imgOrig * 255
-#     histOrg = np.histogram(tmpMat, bins=np.arange(0, 256))  # image histogram
-#     cumSum = np.cumsum(histOrg[0])  # imag cumSum
-#     LUT = np.zeros(256)
-#     all_pixels = original_shape[0] * original_shape[1]  # amount of all the pixels of the image
-#     for i in range(255):
-#         LUT[i] = math.ceil((cumSum[i] / all_pixels) * 255)
-#     for i in range(255):
-#         tmpMat = replaceIntensity(tmpMat, LUT[i], i)
-#     # tmpMat2[]
-#     histEq = np.histogram(tmpMat, bins=np.arange(0, 256))
-#     if color:  # RGB img
-#         YIQimg[:, :, 0] = normalizeData(tmpMat)
-#         new_img = transformYIQ2RGB(YIQimg)
-#         # new_img = normalizeData(new_img)
-#         # YIQimg[:, :, 0] = tmpMat
-#         # RGBimg = transformYIQ2RGB(YIQimg)
-#         # new_img = normalizeData(RGBimg)
-#     else:  # Gray img
-#         new_img = normalizeData(tmpMat)
-#     return new_img, histOrg[0], histEq[0]
 def hsitogramEqualize(imgOrig: np.ndarray) -> (np.ndarray, np.ndarray, np.ndarray):
     """
         Equalizes the histogram of an image
         :param imgOrig: Original Histogram
         :ret
     """
-    original_shape = imgOrig.shape
-    color = False
-    if len(original_shape) == 3:  # it's RGB scale img
+    isColored = False
+    YIQimg = 0
+    tmpMat = imgOrig
+    if len(imgOrig.shape) == 3:  # it's RGB convert to YIQ and take the Y dimension
         YIQimg = transformRGB2YIQ(imgOrig)
-        tmpMat = np.round(YIQimg[:, :, 0] * 255)
-        color = True
-    else:  # it's Gray scale img
-        tmpMat = np.round(imgOrig * 255)
-    histOrg = calHist(tmpMat)  # image histogram
-    cumSum = calCumSum(histOrg)  # image cumSum
-    LUT = np.zeros(256)
-    all_pixels = original_shape[0] * original_shape[1]  # amount of all the pixels of the image
-    for i in range(255):
-        LUT[i] = math.ceil((cumSum[i] / all_pixels) * 255)
-    imEqualized = np.zeros(imgOrig.shape)
-    if color:  # RGB img
-        imEqualized = transformRGB2YIQ(imgOrig)
-        imEqualized[:, :, 0] = normalizeData(imEqualized[:, :, 0])
-        for row in range(len(imEqualized)):
-            for col in range(len(imEqualized[0])):
-                imEqualized[row][col][0] = LUT[int(np.round(imEqualized[row][col][0]))]
-        imEqualized[:, :, 0] = imEqualized[:, :, 0] / 255
-        imEqualized = transformYIQ2RGB(imEqualized)
-    else:  # Gray img
-        for row in range(len(imEqualized)):
-            for col in range(len(imEqualized[0])):
-                imEqualized[row][col] = LUT[int(np.round(imgOrig[row][col] * 255))]
+        tmpMat = YIQimg[:, :, 0]
+        isColored = True
+    tmpMat = cv.normalize(tmpMat, None, 0, 255, cv.NORM_MINMAX)
+    tmpMat = tmpMat.astype('uint8')
+    histOrg = np.histogram(tmpMat.flatten(), bins=256)[0]  # original image histogram
+    cumSum = np.cumsum(histOrg)  # image cumSum
 
-    histEq = calHist(tmpMat)
-    # if color:  # RGB img
-    #     YIQimg[:, :, 0] = normalizeData(tmpMat)
-    #
-    #     new_img = transformYIQ2RGB(YIQimg)
-        # new_img = normalizeData(new_img)
-        # YIQimg[:, :, 0] = tmpMat
-        # RGBimg = transformYIQ2RGB(YIQimg)
-        # new_img = normalizeData(RGBimg)
-    # else:  # Gray img
-    #     new_img = normalizeData(tmpMat)
+    LUT = np.ceil((cumSum / cumSum.max()) * 255)  # calculate the LUT table
+    imEqualized = tmpMat.copy()
+    for i in range(256):  # give the right value for each pixel according to the LUT table
+        imEqualized[tmpMat == i] = int(LUT[i])
+
+    histEq = np.histogram(imEqualized.flatten().astype('uint8'), bins=256)[0]  # equalized image histogram
+
+    imEqualized = imEqualized / 255
+    if isColored:  # RGB img -> convert back to RGB color space
+        YIQimg[:, :, 0] = imEqualized
+        imEqualized = transformYIQ2RGB(YIQimg)
+
     return imEqualized, histOrg, histEq
+
 
 def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarray], List[float]):
     """
