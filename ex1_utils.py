@@ -37,13 +37,12 @@ def imReadAndConvert(filename: str, representation: int) -> np.ndarray:
     :return: The image object
     """
     img = cv.imread(filename)
+    if img is None:
+        sys.exit("Could not read the image.")
     if representation == 1:
-        # img = cv.imread(filename, IMREAD_GRAYSCALE)
         img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     elif representation == 2:
         img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
-    if img is None:
-        sys.exit("Could not read the image.")
     img = img.astype(np.float)
     norm_img = normalizeData(img)
     return norm_img
@@ -140,33 +139,6 @@ def normalizeData(data):
     return (data - np.min(data)) / (np.max(data) - np.min(data))
 
 
-def replaceIntensity(orig: np.ndarray, new_intensity: int, old_intensity: int):
-    original_shape = orig.shape
-    orig = orig.flatten()
-    for i in range(len(orig)):
-        if orig[i] == old_intensity:
-            orig[i] = new_intensity
-    orig = orig.reshape(original_shape)
-    return orig
 
 
-def calHist(img: np.ndarray) -> np.ndarray:
-    img_flat = img.flatten()
-    hist = np.zeros(256)
-    for pix in img_flat:
-        if round(pix) < 256:
-            pix = round(pix)
-        else:
-            pix = 255
-        hist[pix] += 1
-    return hist
-
-
-def calCumSum(arr: np.array) -> np.ndarray:
-    cum_sum = np.zeros_like(arr)
-    cum_sum[0] = arr[0]
-    arr_len = len(arr)
-    for idx in range(1, arr_len):
-        cum_sum[idx] = arr[idx] + cum_sum[idx - 1]
-    return cum_sum
 
