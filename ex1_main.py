@@ -38,14 +38,24 @@ def quantDemo(img_path: str, rep: int):
     print("Error last:\t %f" % err_lst[-1])
     i = err_lst.index(min(err_lst))
     print(i, len(err_lst))
-    print(err_lst)
-    plt.gray()
-    plt.imshow(img_lst[0])
-    plt.figure()
-    plt.imshow(img_lst[-1])
-
-    plt.figure()
-    plt.plot(err_lst, 'r')
+    # print(err_lst)
+    # plt.gray()
+    # plt.imshow(img_lst[0])
+    # plt.figure()
+    # plt.imshow(img_lst[-1])
+    #
+    # plt.figure()
+    # plt.plot(err_lst, 'r')
+    fig, (q2, q4, q8, q32, q64, qOrig) = plt.subplots(6, 1)
+    fig.suptitle("Quantize")
+    quantized = (q2, q4, q8, q32, q64, qOrig)
+    qi = [2, 4, 8, 16, 32, 64, 256]
+    i = 1
+    for qq in quantized:
+        q, err = quantizeImage(img, qi[i], 50)
+        qq.imshow(q[-1])
+        plt.title("Quantization of %d" % qi[i])
+        i += 1
     plt.show()
 
 
@@ -56,16 +66,16 @@ def main():
     # Basic read and display
     # imDisplay(img_path, LOAD_GRAY_SCALE)
     # imDisplay(img_path, LOAD_RGB)
-
-    # Convert Color spaces
+    #
+    # # Convert Color spaces
     # img = imReadAndConvert(img_path, LOAD_RGB)
     # yiq_img = transformRGB2YIQ(img)
     # f, ax = plt.subplots(1, 2)
     # ax[0].imshow(img)
     # ax[1].imshow(yiq_img)
     # plt.show()
-
-    # Image histEq
+    #
+    # # Image histEq
     # histEqDemo(img_path, LOAD_GRAY_SCALE)
     # histEqDemo(img_path, LOAD_RGB)
 
