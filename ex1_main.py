@@ -2,6 +2,8 @@ from ex1_utils import *
 from gamma import gammaDisplay
 import numpy as np
 import matplotlib.pyplot as plt
+from cv2 import cv2 as cv
+
 import time
 
 
@@ -34,11 +36,16 @@ def quantDemo(img_path: str, rep: int):
     print("Time:%.2f" % (time.time() - st))
     print("Error 0:\t %f" % err_lst[0])
     print("Error last:\t %f" % err_lst[-1])
-
+    i = err_lst.index(min(err_lst))
+    # print(i)
+    # img2 = cv.
+    print(err_lst)
     plt.gray()
     plt.imshow(img_lst[0])
     plt.figure()
     plt.imshow(img_lst[-1])
+    # plt.figure()
+    # plt.imshow(img_lst[i])
 
     plt.figure()
     plt.plot(err_lst, 'r')
@@ -47,27 +54,27 @@ def quantDemo(img_path: str, rep: int):
 
 def main():
     print("ID:", myID())
-    img_path = 'beach.jpg'
+    img_path = 'water_bear.png'
 
     # Basic read and display
-    imDisplay(img_path, LOAD_GRAY_SCALE)
-    imDisplay(img_path, LOAD_RGB)
+    # imDisplay(img_path, LOAD_GRAY_SCALE)
+    # imDisplay(img_path, LOAD_RGB)
 
     # Convert Color spaces
-    img = imReadAndConvert(img_path, LOAD_RGB)
-    yiq_img = transformRGB2YIQ(img)
-    f, ax = plt.subplots(1, 2)
-    ax[0].imshow(img)
-    ax[1].imshow(yiq_img)
-    plt.show()
+    # img = imReadAndConvert(img_path, LOAD_RGB)
+    # yiq_img = transformRGB2YIQ(img)
+    # f, ax = plt.subplots(1, 2)
+    # ax[0].imshow(img)
+    # ax[1].imshow(yiq_img)
+    # plt.show()
 
     # Image histEq
-    histEqDemo(img_path, LOAD_GRAY_SCALE)
-    histEqDemo(img_path, LOAD_RGB)
+    # histEqDemo(img_path, LOAD_GRAY_SCALE)
+    # histEqDemo(img_path, LOAD_RGB)
 
     # Image Quantization
-    # quantDemo(img_path, LOAD_GRAY_SCALE)
-    # quantDemo(img_path, LOAD_RGB)
+    quantDemo(img_path, LOAD_GRAY_SCALE)
+    quantDemo(img_path, LOAD_RGB)
 
     # Gamma
     # gammaDisplay(img_path, LOAD_GRAY_SCALE)

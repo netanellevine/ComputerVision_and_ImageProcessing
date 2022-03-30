@@ -132,6 +132,68 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
         :param nIter: Number of optimization loops
         :return: (List[qImage_i],List[error_i])
     """
+    isColored = False
+    YIQimg = 0
+    tmpMat = imOrig
+    if len(imOrig.shape) == 3:  # it's RGB convert to YIQ and take the Y dimension
+        YIQimg = transformRGB2YIQ(imOrig)
+        tmpMat = YIQimg[:, :, 0]
+        isColored = True
+    tmpMat = cv.normalize(tmpMat, None, 0, 255, cv.NORM_MINMAX).astype('uint8')
+    histOrg = np.histogram(tmpMat.flatten(), bins=256)[0]
+    cumSum = np.cumsum(histOrg)  # image cumSum
+    each_slice = cumSum.max() / nQuant
+    slices = [0]
+    k = 1
+    for i in range(255):  # divide it to slices for the first time.
+        if cumSum[i] <= each_slice * k <= cumSum[i + 1]:
+            slices.append(i)
+            k += 1
+    slices.pop()
+    slices.insert(nQuant, 255)
+    iterImages = []
+    MSE = []
+    for i in range(nIter):
+        temp_img = np.zeros(tmpMat.shape)
+        Qi = []
+        for j in range(nQuant):  # calculate the Qi avg for each slice.
+            Si = np.array(range(slices[j], slices[j+1]))
+            Pi = histOrg[slices[j]:slices[j + 1]]
+            avg = int((Si * Pi).sum() / Pi.sum())
+            Qi.append(avg)
+
+        for k in range(nQuant):  # update the image.
+            temp_img[tmpMat > (slices[k])] = Qi[k]
+
+        slices.clear()
+        for k in range(1, nQuant):  # update the slices.
+            slices.append(int((Qi[k - 1] + Qi[k]) / 2))
+
+        slices.insert(0, 0)
+        slices.insert(nQuant, 255)
+        # print(slices)
+        MSE.append((np.sqrt((tmpMat - temp_img) ** 2)).mean())  # add the MSE to the list
+        tmpMat = temp_img
+        iterImages.append(temp_img / 255)  # add the updated image to the list
+    if isColored:
+        for i in range(nIter):
+            YIQimg[:, :, 0] = iterImages[i]
+            iterImages[i] = transformYIQ2RGB(YIQimg)
+
+    return iterImages, MSE
+
+
+
+
+
+    # print(slices)
+    # plt.hist(cumSum, 256, [0, 256])
+    # plt.show()
+    # print(cumSum.shape)
+    # print(cumSum[209])
+    # print(cumSum[237])
+    # print(cumSum[254])
+    # print(cumSum)
     pass
 
 
