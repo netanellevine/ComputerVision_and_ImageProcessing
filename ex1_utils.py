@@ -143,7 +143,7 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
 
     # Part 1 -> create the first division of borders according to the histogram (goal: equal as possible).
     histOrg = np.histogram(tmpImg.flatten(), bins=256)[0]
-    cumSum = np.cumsum(histOrg)  # image cumSum
+    cumSum = np.cumsum(histOrg)
     each_slice = cumSum.max() / nQuant  # ultimate size for each slice
     slices = [0]
     m = 1
@@ -162,7 +162,7 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
         quantizeImg = np.zeros(tmpImg.shape)
         Qi = []  # Intensity average list.
         # part 3.1 -> calculate the intensity average value for each slice
-        for j in range(nQuant):  # calculate the Qi avg for each slice.
+        for j in range(nQuant):
             Si = np.array(range(slices[j], slices[j+1]))  # Which intensities levels is within the range of this slice.
             Pi = histOrg[slices[j]:slices[j + 1]]  # How many times those intensities levels appears in the image.
             avg = int((Si * Pi).sum() / Pi.sum())  # The intensity level that is the average of this slice
@@ -181,10 +181,10 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
         slices.insert(nQuant, 255)
 
         # part 3.4 -> add MSE and check if done.
-        MSE_list.append((np.sqrt((tmpImg - quantizeImg) ** 2)).mean())  # add the MSE to the list
+        MSE_list.append((np.sqrt((tmpImg - quantizeImg) ** 2)).mean())
         tmpImg = quantizeImg
-        images_list.append(quantizeImg / 255)  # add the updated image to the list
-        if checkMSE(MSE_list):  # check whether the last 3 MSE values were not changed if so -> break.
+        images_list.append(quantizeImg / 255)
+        if checkMSE(MSE_list):  # check whether the last 5 MSE values were not changed if so -> break.
             break
 
     # part 4 -> if @imOrig was in RGB color space convert it back.
@@ -200,6 +200,7 @@ def normalizeData(data):
     return (data - np.min(data)) / (np.max(data) - np.min(data))
 
 
+# This function checks if the last 5 values of the @MSE_list is the same -> if so returns true.
 def checkMSE(MSE_list: List[float]) -> bool:
     if len(MSE_list) > 4:
         if MSE_list[-1] == MSE_list[-2] == MSE_list[-3] == MSE_list[-4] == MSE_list[-5]:
