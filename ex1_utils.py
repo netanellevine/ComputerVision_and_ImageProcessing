@@ -8,7 +8,6 @@
          ########: ##:::. ##::'######:
         ........::..:::::..:::......::
 """
-import math
 import sys
 from typing import List
 from cv2 import cv2 as cv
@@ -132,73 +131,80 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
         :param nIter: Number of optimization loops
         :return: (List[qImage_i],List[error_i])
     """
+    # part 0 -> exporting the img RGB/Gray and normalize it.
     isColored = False
     YIQimg = 0
-    tmpMat = imOrig
+    tmpImg = imOrig
     if len(imOrig.shape) == 3:  # it's RGB convert to YIQ and take the Y dimension
         YIQimg = transformRGB2YIQ(imOrig)
-        tmpMat = YIQimg[:, :, 0]
+        tmpImg = YIQimg[:, :, 0]
         isColored = True
-    tmpMat = cv.normalize(tmpMat, None, 0, 255, cv.NORM_MINMAX).astype('uint8')
-    histOrg = np.histogram(tmpMat.flatten(), bins=256)[0]
+    tmpImg = cv.normalize(tmpImg, None, 0, 255, cv.NORM_MINMAX).astype('uint8')
+
+    # Part 1 -> create the first division of borders according to the histogram (goal: equal as possible).
+    histOrg = np.histogram(tmpImg.flatten(), bins=256)[0]
     cumSum = np.cumsum(histOrg)  # image cumSum
-    each_slice = cumSum.max() / nQuant
+    each_slice = cumSum.max() / nQuant  # ultimate size for each slice
     slices = [0]
-    k = 1
+    m = 1
     for i in range(255):  # divide it to slices for the first time.
-        if cumSum[i] <= each_slice * k <= cumSum[i + 1]:
+        if cumSum[i] <= each_slice * m <= cumSum[i + 1]:
             slices.append(i)
-            k += 1
+            m += 1
     slices.pop()
     slices.insert(nQuant, 255)
-    iterImages = []
-    MSE = []
+    # This is how the slices list should look like -> slices[size = @nQuant + 1] = [0, num2, num3,...., 255]
+
+    # part 3 -> quantize the image.
+    images_list = []  # The images list for each iteration
+    MSE_list = []  # The MSE list for each iteration.
     for i in range(nIter):
-        temp_img = np.zeros(tmpMat.shape)
-        Qi = []
+        quantizeImg = np.zeros(tmpImg.shape)
+        Qi = []  # Intensity average list.
+        # part 3.1 -> calculate the intensity average value for each slice
         for j in range(nQuant):  # calculate the Qi avg for each slice.
-            Si = np.array(range(slices[j], slices[j+1]))
-            Pi = histOrg[slices[j]:slices[j + 1]]
-            avg = int((Si * Pi).sum() / Pi.sum())
+            Si = np.array(range(slices[j], slices[j+1]))  # Which intensities levels is within the range of this slice.
+            Pi = histOrg[slices[j]:slices[j + 1]]  # How many times those intensities levels appears in the image.
+            avg = int((Si * Pi).sum() / Pi.sum())  # The intensity level that is the average of this slice
             Qi.append(avg)
 
-        for k in range(nQuant):  # update the image.
-            temp_img[tmpMat > (slices[k])] = Qi[k]
+        # part 3.2 -> update the @quantizeImg according to the @Qi average values.
+        for k in range(nQuant):
+            quantizeImg[tmpImg > slices[k]] = Qi[k]
 
         slices.clear()
-        for k in range(1, nQuant):  # update the slices.
+        # part 3.3 -> update the slices according to the @Qi values -> slices[k] = average of the Qi[left] and Qi[right]
+        for k in range(1, nQuant):
             slices.append(int((Qi[k - 1] + Qi[k]) / 2))
 
         slices.insert(0, 0)
         slices.insert(nQuant, 255)
-        # print(slices)
-        MSE.append((np.sqrt((tmpMat - temp_img) ** 2)).mean())  # add the MSE to the list
-        tmpMat = temp_img
-        iterImages.append(temp_img / 255)  # add the updated image to the list
+
+        # part 3.4 -> add MSE and check if done.
+        MSE_list.append((np.sqrt((tmpImg - quantizeImg) ** 2)).mean())  # add the MSE to the list
+        tmpImg = quantizeImg
+        images_list.append(quantizeImg / 255)  # add the updated image to the list
+        if checkMSE(MSE_list):  # check whether the last 3 MSE values were not changed if so -> break.
+            break
+
+    # part 4 -> if @imOrig was in RGB color space convert it back.
     if isColored:
-        for i in range(nIter):
-            YIQimg[:, :, 0] = iterImages[i]
-            iterImages[i] = transformYIQ2RGB(YIQimg)
+        for i in range(len(MSE_list)):
+            YIQimg[:, :, 0] = images_list[i]
+            images_list[i] = transformYIQ2RGB(YIQimg)
 
-    return iterImages, MSE
-
-
-
-
-
-    # print(slices)
-    # plt.hist(cumSum, 256, [0, 256])
-    # plt.show()
-    # print(cumSum.shape)
-    # print(cumSum[209])
-    # print(cumSum[237])
-    # print(cumSum[254])
-    # print(cumSum)
-    pass
+    return images_list, MSE_list
 
 
 def normalizeData(data):
     return (data - np.min(data)) / (np.max(data) - np.min(data))
+
+
+def checkMSE(MSE_list: List[float]) -> bool:
+    if len(MSE_list) > 4:
+        if MSE_list[-1] == MSE_list[-2] == MSE_list[-3] == MSE_list[-4] == MSE_list[-5]:
+            return True
+    return False
 
 
 

@@ -31,21 +31,18 @@ def quantDemo(img_path: str, rep: int):
     img = imReadAndConvert(img_path, rep)
     st = time.time()
 
-    img_lst, err_lst = quantizeImage(img, 3, 20)
+    img_lst, err_lst = quantizeImage(img, 5, 100)
 
     print("Time:%.2f" % (time.time() - st))
     print("Error 0:\t %f" % err_lst[0])
     print("Error last:\t %f" % err_lst[-1])
     i = err_lst.index(min(err_lst))
-    # print(i)
-    # img2 = cv.
+    print(i, len(err_lst))
     print(err_lst)
     plt.gray()
     plt.imshow(img_lst[0])
     plt.figure()
     plt.imshow(img_lst[-1])
-    # plt.figure()
-    # plt.imshow(img_lst[i])
 
     plt.figure()
     plt.plot(err_lst, 'r')
@@ -54,7 +51,7 @@ def quantDemo(img_path: str, rep: int):
 
 def main():
     print("ID:", myID())
-    img_path = 'water_bear.png'
+    img_path = 'beach.jpg'
 
     # Basic read and display
     # imDisplay(img_path, LOAD_GRAY_SCALE)
