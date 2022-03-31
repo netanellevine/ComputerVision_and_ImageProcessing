@@ -162,9 +162,10 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
         quantizeImg = np.zeros(tmpImg.shape)
         Qi = []  # Intensity average list.
         # part 3.1 -> calculate the intensity average value for each slice
-        for j in range(nQuant):
-            Si = np.array(range(slices[j], slices[j+1]))  # Which intensities levels is within the range of this slice.
-            Pi = histOrg[slices[j]:slices[j + 1]]  # How many times those intensities levels appears in the image.
+        for j in range(1, nQuant + 1):
+            # print(j, nQuant)
+            Si = np.array(range(slices[j-1], slices[j]))  # Which intensities levels is within the range of this slice.
+            Pi = histOrg[slices[j-1]:slices[j]]  # How many times those intensities levels appears in the image.
             avg = int((Si * Pi).sum() / Pi.sum())  # The intensity level that is the average of this slice
             Qi.append(avg)
 
