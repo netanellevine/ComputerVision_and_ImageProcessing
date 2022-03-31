@@ -30,33 +30,58 @@ def histEqDemo(img_path: str, rep: int):
 def quantDemo(img_path: str, rep: int):
     img = imReadAndConvert(img_path, rep)
     st = time.time()
-
-    img_lst, err_lst = quantizeImage(img, 5, 100)
+    num2quant = 3
+    num_of_max_iter = 20
+    img_lst, err_lst = quantizeImage(img, num2quant, num_of_max_iter)
 
     print("Time:%.2f" % (time.time() - st))
-    print("Error 0:\t %f" % err_lst[0])
-    print("Error last:\t %f" % err_lst[-1])
+    print("Error 0:\t %.6f" % err_lst[0])
+    print("Error last:\t %.6f" % err_lst[-1])
     i = err_lst.index(min(err_lst))
     print(i, len(err_lst))
-    # print(err_lst)
-    # plt.gray()
-    # plt.imshow(img_lst[0])
+    print(err_lst)
+    plt.gray()
+
+    ax1 = plt.subplot(2, 2, 1, frameon=False)
+    plt.tick_params('both', labelbottom=False)
+    plt.imshow(img)
+    plt.title("Original image")
     # plt.figure()
-    # plt.imshow(img_lst[-1])
-    #
+
+    ax2 = plt.subplot(2, 2, 2, frameon=False)
+    plt.tick_params('both', labelbottom=False)
+    plt.imshow(img_lst[0])
+    plt.title("First iteration")
     # plt.figure()
-    # plt.plot(err_lst, 'r')
-    fig, (q2, q4, q8, q32, q64, qOrig) = plt.subplots(6, 1)
-    fig.suptitle("Quantize")
-    quantized = (q2, q4, q8, q32, q64, qOrig)
-    qi = [2, 4, 8, 16, 32, 64, 256]
-    i = 1
-    for qq in quantized:
-        q, err = quantizeImage(img, qi[i], 50)
-        qq.imshow(q[-1])
-        plt.title("Quantization of %d" % qi[i])
-        i += 1
+
+    ax3 = plt.subplot(2, 2, 3, frameon=False)
+    plt.tick_params('both', labelbottom=False)
+    plt.imshow(img_lst[-1])
+    plt.title("Last iteration")
+    # plt.figure()
+
+    plt.subplot(2, 2, 4)
+    plt.plot(err_lst, 'r')
+    plt.title("MSE - Graph")
+
+    title = "Quantize image from 256 to: {}, Max iterations: {}, actual: {}\n".format(num2quant, num_of_max_iter, len(err_lst))
+    plt.suptitle(title)
     plt.show()
+
+    # fig, (q2, q4, q8, q32, q64, qOrig) = plt.subplots(6, 1)
+    # fig.suptitle("Quantize")
+    # quantized = (q2, q4, q8, q32, q64, qOrig)
+    # qi = [2, 4, 8, 16, 32, 64, 256]
+    # i = 0
+    # for qq in quantized:
+    #     q, err = quantizeImage(img, qi[i], 50)
+    #     qq.imshow(q[-1])
+    #     plt.title("Quantization of %d" % qi[i])
+    #     i += 1
+    # q, err = quantizeImage(img, qi[i], 50)
+    # q2.imshow(q[-1])
+
+    # plt.show()
 
 
 def main():

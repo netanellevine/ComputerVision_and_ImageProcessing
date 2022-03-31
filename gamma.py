@@ -34,7 +34,8 @@ def on_trackbar(val: int):
     gammaTable = np.array([((i / float(max_)) ** invGamma) * max_
                            for i in np.arange(0, max_ + 1)]).astype("uint8")
     img_ = cv.LUT(img, gammaTable)
-    cv.imshow(title_window, img_)
+    scaled_img = cv.resize(img_, 960, 540)
+    cv.imshow(title_window, scaled_img)
 
 
 def gammaDisplay(img_path: str, rep: int):
@@ -51,7 +52,7 @@ def gammaDisplay(img_path: str, rep: int):
         img = cv.imread(img_path, 1)
 
     cv.namedWindow(title_window)
-    trackbar_name = 'Gamma: 0 -> %d' % gamma_slider_max
+    trackbar_name = 'Gamma:'
     cv.createTrackbar(trackbar_name, title_window, 0, gamma_slider_max, on_trackbar)
     # Show some stuff
     on_trackbar(100)
@@ -62,7 +63,7 @@ def gammaDisplay(img_path: str, rep: int):
 
 
 def main():
-    gammaDisplay('dark.jpg', 2)
+    gammaDisplay('bac_con.png', 1)
 
 
 if __name__ == '__main__':
