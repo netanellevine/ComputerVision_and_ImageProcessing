@@ -74,8 +74,8 @@ def quantDemo(img_path: str, rep: int):
     # plt.show()
 
     i = 0
-    colors = [3, 4, 8, 16, 20]
-    fig, axs = plt.subplots(3, 2, figsize=(7, 6), constrained_layout=True, sharex='all', sharey='all')
+    colors = [3, 4, 8, 16, 32]
+    fig, axs = plt.subplots(1, 2, figsize=(7, 6), constrained_layout=True, sharex='all', sharey='all')
     plt.gray()
     fontdict = {'fontsize': 11,
                 'fontweight': 3,
@@ -87,7 +87,7 @@ def quantDemo(img_path: str, rep: int):
             ax.imshow(img)
             ax.set_title("Original image", fontsize='small', loc='left')
         else:
-            q, err = quantizeImage(img, colors[i], 20)
+            q, err = quantizeImage(img, colors[-1], 20)
             ax.imshow(q[-1])
             # ax.set_title("Quantization of %d" % colors[i], fontsize='small', loc='left')
             ax.set_title("Quantization of %d" % colors[i], fontdict=fontdict)

@@ -145,14 +145,18 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
     histOrg = np.histogram(tmpImg.flatten(), bins=256)[0]
     cumSum = np.cumsum(histOrg)
     each_slice = cumSum.max() / nQuant  # ultimate size for each slice
+    print(each_slice)
+    print(cumSum)
     slices = [0]
     m = 1
     for i in range(255):  # divide it to slices for the first time.
-        if cumSum[i] <= each_slice * m <= cumSum[i + 1]:
+        if cumSum[i] <= each_slice * m < cumSum[i + 1]:
             slices.append(i)
+            print(f'nQuant={nQuant}, slices={slices}, slices size={len(slices)}')
             m += 1
     slices.pop()
     slices.insert(nQuant, 255)
+    print(f'nQuant={nQuant}, slices={slices}, slices size={len(slices)}')
     # This is how the slices list should look like -> slices[size = @nQuant + 1] = [0, num2, num3,...., 255]
 
     # part 3 -> quantize the image.
@@ -163,7 +167,7 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
         Qi = []  # Intensity average list.
         # part 3.1 -> calculate the intensity average value for each slice
         for j in range(1, nQuant + 1):
-            # print(j, nQuant)
+            # print(f'j={j}, nQuant={nQuant}, slices={slices}, slices size={len(slices)}')
             Si = np.array(range(slices[j-1], slices[j]))  # Which intensities levels is within the range of this slice.
             Pi = histOrg[slices[j-1]:slices[j]]  # How many times those intensities levels appears in the image.
             avg = int((Si * Pi).sum() / Pi.sum())  # The intensity level that is the average of this slice

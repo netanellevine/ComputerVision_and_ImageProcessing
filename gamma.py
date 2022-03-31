@@ -34,8 +34,10 @@ def on_trackbar(val: int):
     gammaTable = np.array([((i / float(max_)) ** invGamma) * max_
                            for i in np.arange(0, max_ + 1)]).astype("uint8")
     img_ = cv.LUT(img, gammaTable)
-    scaled_img = cv.resize(img_, 960, 540)
-    cv.imshow(title_window, scaled_img)
+    # scaled_img = cv.resize(img_, 960, 540)
+    # cv.imshow(title_window, scaled_img)
+    cv.imshow(title_window, img_)
+
 
 
 def gammaDisplay(img_path: str, rep: int):
@@ -63,7 +65,7 @@ def gammaDisplay(img_path: str, rep: int):
 
 
 def main():
-    gammaDisplay('bac_con.png', 1)
+    gammaDisplay('beach.jpg', 2)
 
 
 if __name__ == '__main__':
