@@ -139,24 +139,26 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
         YIQimg = transformRGB2YIQ(imOrig)
         tmpImg = YIQimg[:, :, 0]
         isColored = True
+    Orig_copy = tmpImg.copy()
     tmpImg = cv.normalize(tmpImg, None, 0, 255, cv.NORM_MINMAX).astype('uint8')
+    # Orig_copy = tmpImg.copy()
 
     # Part 1 -> create the first division of borders according to the histogram (goal: equal as possible).
     histOrg = np.histogram(tmpImg.flatten(), bins=256)[0]
     cumSum = np.cumsum(histOrg)
     each_slice = cumSum.max() / nQuant  # ultimate size for each slice
-    print(each_slice)
-    print(cumSum)
+    # print(each_slice)
+    # print(cumSum)
     slices = [0]
     m = 1
     for i in range(255):  # divide it to slices for the first time.
-        if cumSum[i] <= each_slice * m < cumSum[i + 1]:
+        if cumSum[i] <= each_slice * m <= cumSum[i + 1]:
             slices.append(i)
-            print(f'nQuant={nQuant}, slices={slices}, slices size={len(slices)}')
+            # print(f'nQuant={nQuant}, slices={slices}, slices size={len(slices)}')
             m += 1
     slices.pop()
     slices.insert(nQuant, 255)
-    print(f'nQuant={nQuant}, slices={slices}, slices size={len(slices)}')
+    # print(f'nQuant={nQuant}, slices={slices}, slices size={len(slices)}')
     # This is how the slices list should look like -> slices[size = @nQuant + 1] = [0, num2, num3,...., 255]
 
     # part 3 -> quantize the image.
@@ -186,10 +188,10 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
         slices.insert(nQuant, 255)
 
         # part 3.4 -> add MSE and check if done.
-        MSE_list.append((np.sqrt((tmpImg - quantizeImg) ** 2)).mean())
+        MSE_list.append((np.sqrt((Orig_copy - quantizeImg) ** 2)).mean())
         tmpImg = quantizeImg
         images_list.append(quantizeImg / 255)
-        if checkMSE(MSE_list):  # check whether the last 5 MSE values were not changed if so -> break.
+        if checkMSE(MSE_list, nIter):  # check whether the last 5 MSE values were not changed if so -> break.
             break
 
     # part 4 -> if @imOrig was in RGB color space convert it back.
@@ -206,11 +208,14 @@ def normalizeData(data):
 
 
 # This function checks if the last 5 values of the @MSE_list is the same -> if so returns true.
-def checkMSE(MSE_list: List[float]) -> bool:
-    if len(MSE_list) > 4:
-        if MSE_list[-1] == MSE_list[-2] == MSE_list[-3] == MSE_list[-4] == MSE_list[-5]:
-            return True
-    return False
+def checkMSE(MSE_list: List[float], nIter: int) -> bool:
+    if len(MSE_list) > nIter / 10:
+        for i in range(2, int(nIter / 10) + 1):
+            if MSE_list[-1] != MSE_list[-i]:
+                return False
+    else:
+        return False
+    return True
 
 
 
