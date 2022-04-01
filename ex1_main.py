@@ -17,18 +17,28 @@ def histEqDemo(img_path: str, rep: int):
     cumsum = np.cumsum(histOrg)
     cumsumEq = np.cumsum(histEq)
     plt.gray()
+
+    plt.subplot(2, 2, 1, frameon=False)
+    plt.tick_params('x', labelbottom=False)
+    plt.tick_params('y', labelbottom=False)
+    plt.imshow(img)
+    plt.title("Before")
+
+    plt.subplot(2, 2, 2, frameon=False)
+    plt.tick_params('x', labelbottom=False)
+    plt.tick_params('y', labelbottom=False)
+    plt.imshow(imgeq)
+    plt.title("After")
+
+    plt.subplot(2, 2, (3, 4))
     plt.plot(range(256), cumsum, 'r', label='Original')
     plt.plot(range(256), cumsumEq, 'g', label='Equalized')
     plt.xlabel("Intensity level", fontsize=15)
     plt.ylabel("Probability", fontsize=15)
-    plt.legend(loc='lower right', fontsize='large')
+    plt.legend(loc='lower right', fontsize='11')
 
-    # Display the images
-    plt.figure()
-    plt.imshow(img)
-
-    plt.figure()
-    plt.imshow(imgeq)
+    title = "Histogram Equalization"
+    plt.suptitle(title, fontsize=19)
     plt.show()
 
 
@@ -94,30 +104,30 @@ def quantDemo(img_path: str, rep: int):
 
 def main():
     print("ID:", myID())
-    img_path = 'beach.jpg'
+    img_path = 'dark.jpg'
 
     # Basic read and display
     # imDisplay(img_path, LOAD_GRAY_SCALE)
     # imDisplay(img_path, LOAD_RGB)
     #
     # # Convert Color spaces
-    rgb_img = imReadAndConvert(img_path, LOAD_RGB)
-    gray_img = imReadAndConvert(img_path, LOAD_GRAY_SCALE)
-    yiq_img = transformRGB2YIQ(rgb_img)
-    i = 0
-    images = [gray_img, rgb_img, yiq_img]
-    spaces = ['Gray', 'RGB', 'YIQ']
-    fig, axs = plt.subplots(1, 3, figsize=(7, 3), constrained_layout=True, sharex='all', sharey='all')
-    plt.gray()
-    fontdict = {'fontsize': 12,
-                'fontweight': 4}
-    for ax in axs.flat:
-        ax.imshow(images[i])
-        ax.set_title(f'{spaces[i]} Color Space', fontdict=fontdict)
-        i += 1
-    title = f'Same image in several color spaces'
-    plt.suptitle(title, fontsize=18, fontweight=6)
-    plt.show()
+    # rgb_img = imReadAndConvert(img_path, LOAD_RGB)
+    # gray_img = imReadAndConvert(img_path, LOAD_GRAY_SCALE)
+    # yiq_img = transformRGB2YIQ(rgb_img)
+    # i = 0
+    # images = [gray_img, rgb_img, yiq_img]
+    # spaces = ['Gray', 'RGB', 'YIQ']
+    # fig, axs = plt.subplots(1, 3, figsize=(7, 3), constrained_layout=True, sharex='all', sharey='all')
+    # plt.gray()
+    # fontdict = {'fontsize': 12,
+    #             'fontweight': 4}
+    # for ax in axs.flat:
+    #     ax.imshow(images[i])
+    #     ax.set_title(f'{spaces[i]} Color Space', fontdict=fontdict)
+    #     i += 1
+    # title = f'Same image in several color spaces'
+    # plt.suptitle(title, fontsize=18, fontweight=6)
+    # plt.show()
 
     # # Image histEq
     histEqDemo(img_path, LOAD_GRAY_SCALE)
