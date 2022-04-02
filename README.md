@@ -4,9 +4,11 @@ This project is the first assignment in the course of Image Processing and Compu
 In this assignment I'll be doing the following:
 1. Read and display an image given.
 2. Convert an image between 2 color spaces - RGB and YIQ.
-3. Perform Histogram Equalization on images.
+3. Perform [Histogram Equalization][1] on images.
 4. Perform Image Quantization.
 5. Perform Gamma correction on Images.  
+
+[1]:Histogram_Equalization "Histogram Equalization"  
 
 _see more:_  
 [Histogram Equalization](https://en.wikipedia.org/wiki/Histogram_equalization)  
@@ -27,7 +29,7 @@ Related functions at **_ex1_utils.py_**:
 ![](output_plots/sunset_color_spaces.png)
 ![](output_plots/water_bear_3clr_spaces.png)
 ___
-
+<!-- Histogram_Equalization -->
 ## Histogram Equalization
 
 Related functions at **_ex1_utils.py_**:
