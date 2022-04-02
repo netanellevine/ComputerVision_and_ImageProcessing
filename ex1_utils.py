@@ -92,10 +92,10 @@ def transformYIQ2RGB(imgYIQ: np.ndarray) -> np.ndarray:
 
 def hsitogramEqualize(imgOrig: np.ndarray) -> (np.ndarray, np.ndarray, np.ndarray):
     """
-        Equalizes the histogram of an image
-        :param imgOrig: Original Histogram
-        :ret
-    """
+            Equalizes the histogram of an image
+            :param imgOrig: Original image
+            :return: (imgEq,histOrg,histEQ)
+            """
     isColored = False
     YIQimg = 0
     tmpMat = imgOrig
