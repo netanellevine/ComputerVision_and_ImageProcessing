@@ -9,9 +9,9 @@ In this assignment I'll be doing the following:
 5. Perform [Gamma correction][4] on Images.  
 
 [1]:#histogram-equalization "RGB and YIQ"
-[1]:#convert-an-image-between-YIQ-and-RGB "Histogram Equalization"
-[1]:#Image-Quantization "Image Quantization"
-[1]:#Gamma-correction "Gamma correction"
+[2]:#convert-an-image-between-YIQ-and-RGB "Histogram Equalization"
+[3]:#Image-Quantization "Image Quantization"
+[4]:#Gamma-correction "Gamma correction"
 
 _see more:_  
 [Histogram Equalization - Wikipedia](https://en.wikipedia.org/wiki/Histogram_equalization)  
