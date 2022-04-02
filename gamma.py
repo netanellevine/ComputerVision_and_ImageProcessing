@@ -8,36 +8,22 @@
          ########: ##:::. ##::'######:
         ........::..:::::..:::......::
 """
-import ex1_utils
-from ex1_utils import LOAD_GRAY_SCALE
-import sys
-from typing import List
 from cv2 import cv2 as cv
 import numpy as np
-from matplotlib import pyplot as plt
-from cv2 import IMREAD_COLOR, IMREAD_GRAYSCALE
-
-gamma_slider_max = 200
 title_window = 'Gamma Correction'
+gamma_slider_max_val = 200
+max_pix = 255
 isColor = False
 img = 0
-# curr_gamma = 0
-# trackbar_name = 'Gamma: %d' % curr_gamma
 
 
 def on_trackbar(val: int):
-    # global curr_gamma, trackbar_name
-    # trackbar_name = 'Gamma: %d' % val
-    # curr_gamma = val
     gamma = float(val) / 100
     invGamma = 1000 if gamma == 0 else 1.0 / gamma
-    max_ = 255
-    gammaTable = np.array([((i / float(max_)) ** invGamma) * max_
-                           for i in np.arange(0, max_ + 1)]).astype("uint8")
+    gammaTable = np.array([((i / float(max_pix)) ** invGamma) * max_pix
+                           for i in np.arange(0, max_pix + 1)]).astype("uint8")
     img_ = cv.LUT(img, gammaTable)
 
-    # scaled_img = cv.resize(img_, 960, 540)
-    # cv.imshow(title_window, scaled_img)
     cv.imshow(title_window, img_)
 
 
@@ -49,16 +35,16 @@ def gammaDisplay(img_path: str, rep: int):
     :return: None
     """
     global img
-    if rep == 1:
+    if rep == 1:  # Gray img
         img = cv.imread(img_path, 2)
-    else:  # rep = LOAD_RGB
+    else:  # RGB img
         img = cv.imread(img_path, 1)
 
     cv.namedWindow(title_window)
     trackbar_name = 'Gamma:'
-    cv.createTrackbar(trackbar_name, title_window, 0, gamma_slider_max, on_trackbar)
-    # Show some stuff
-    on_trackbar(100)
+    cv.createTrackbar(trackbar_name, title_window, 100, gamma_slider_max_val, on_trackbar)
+    # Show the trackbar
+    on_trackbar(100)  # Start when the img is multiply by gamma = 1 == 100 a.k.a. the original img.
     # Wait until user press some key
     cv.waitKey(0)
     cv.destroyAllWindows()
@@ -66,7 +52,7 @@ def gammaDisplay(img_path: str, rep: int):
 
 
 def main():
-    gammaDisplay('images/beach.jpg', 2)
+    gammaDisplay('images/bac_con.png', 1)
 
 
 if __name__ == '__main__':
