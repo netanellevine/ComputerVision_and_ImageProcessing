@@ -8,12 +8,12 @@ In this assignment I'll be doing the following:
 4. Perform Image Quantization.
 5. Perform Gamma correction on Images.  
 
-[1]:Histogram_Equalization "Histogram Equalization"  
+[1]:**hsitogramEqualize** "Histogram Equalization"  
 
 _see more:_  
-[Histogram Equalization](https://en.wikipedia.org/wiki/Histogram_equalization)  
-[Image Quantization](https://en.wikipedia.org/wiki/Quantization_(image_processing))  
-[Gamma correction](https://en.wikipedia.org/wiki/Gamma_correction)
+[Histogram Equalization - Wikipedia](https://en.wikipedia.org/wiki/Histogram_equalization)  
+[Image Quantization - Wikipedia](https://en.wikipedia.org/wiki/Quantization_(image_processing))  
+[Gamma correction - Wikipedia](https://en.wikipedia.org/wiki/Gamma_correction)
 ____
 
 ## Convert an image between YIQ and RGB
@@ -29,7 +29,7 @@ Related functions at **_ex1_utils.py_**:
 ![](output_plots/sunset_color_spaces.png)
 ![](output_plots/water_bear_3clr_spaces.png)
 ___
-<!-- Histogram_Equalization -->
+
 ## Histogram Equalization
 
 Related functions at **_ex1_utils.py_**:
