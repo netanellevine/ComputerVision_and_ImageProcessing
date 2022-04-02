@@ -94,6 +94,11 @@ Related functions at **_gamma.py_**:
 
 
 https://user-images.githubusercontent.com/74298433/161400091-f3860682-88a5-4569-a1d8-c7bf4313d6df.mp4
+   
+
+
+
+https://user-images.githubusercontent.com/74298433/161400152-239131e9-7510-493a-b4be-89b29fe220f3.mov
 
 
 --- 
