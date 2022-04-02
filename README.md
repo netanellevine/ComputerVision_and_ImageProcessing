@@ -3,13 +3,15 @@
 This project is the first assignment in the course of Image Processing and Computer Vision.   
 In this assignment I'll be doing the following:
 1. Read and display an image given.
-2. Convert an image between 2 color spaces - RGB and YIQ.
-3. Perform [Histogram Equalization][1] on images. [Histogram Equalization](#histogram-equalization)    
-4. Perform Image Quantization.
-5. Perform Gamma correction on Images.  
+2. Convert an image between 2 color spaces - [RGB and YIQ][1].
+3. Perform [Histogram Equalization][2] on images.  
+4. Perform [Image Quantization][3].
+5. Perform [Gamma correction][4] on Images.  
 
-
-[1]:#histogram-equalization "Histogram Equalization"
+[1]:#histogram-equalization "RGB and YIQ"
+[1]:#convert-an-image-between-YIQ-and-RGB "Histogram Equalization"
+[1]:#Image-Quantization "Image Quantization"
+[1]:#Gamma-correction "Gamma correction"
 
 _see more:_  
 [Histogram Equalization - Wikipedia](https://en.wikipedia.org/wiki/Histogram_equalization)  
@@ -47,7 +49,7 @@ Related functions at **_ex1_utils.py_**:
 ![](output_plots/hist_sunset_color.png)
 ___
 
-## Quantization
+## Image Quantization
 
 Related functions at **_ex1_utils.py_**:
 1. **quantizeImage**  quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarray], List[float]):
@@ -64,6 +66,17 @@ Related functions at **_ex1_utils.py_**:
 ![](output_plots/fewq_beach_gray.png)
 ___
 
+## Gamma correction
+
+Related functions at **_ex1_utils.py_**:
+1. **quantizeImage**  quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarray], List[float]):
+   1. **param** - _imgOrig_ -> np.ndarray
+   2. **param** - _nQuant_ -> int -> amount of intensities to quantize.
+   3. **param** - _nIter_ -> int -> amount of iterations to perform.
+   4. **return** - tuple:
+      1. _Images_list_ -> List[np.ndarray] -> list of the images after each iteration
+      2. _MSE_list_ -> List[float] -> list of the MSE after each iteration
+--- 
 ### Requirements
 
 * The system used to implement this project is Mac OS Monterey 12.3.1
