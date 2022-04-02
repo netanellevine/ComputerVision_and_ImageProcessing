@@ -51,6 +51,10 @@ Related functions at **_ex1_utils.py_**:
 ![](output_plots/hist_lighthouse_color.png)
 ![](output_plots/hist_penguin_gray.png)
 ![](output_plots/hist_sunset_color.png)
+
+[Back to top ][5]
+
+
 ___
 
 ## Image Quantization
@@ -68,6 +72,10 @@ Related functions at **_ex1_utils.py_**:
 ![](output_plots/q6_200iter_beach_color.png)
 ![](output_plots/fewq_uluru_color.png)
 ![](output_plots/fewq_beach_gray.png)
+
+[Back to top ][5]
+
+
 ___
 
 ## Gamma correction
