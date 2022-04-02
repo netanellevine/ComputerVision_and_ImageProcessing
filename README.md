@@ -3,15 +3,23 @@
 This project is the first assignment in the course of Image Processing and Computer Vision.   
 In this assignment I'll be doing the following:
 1. Read and display an image given.
-2. Convert an image between 2 color spaces - [RGB and YIQ][1]. _(ex1_utils.py)_
-3. Perform [Histogram Equalization][2] on images. _(ex1_utils.py)_
-4. Perform [Image Quantization][3]. _(ex1_utils.py)_
-5. Perform [Gamma correction][4] on Images. _(gamma.py)_
+2. Convert an image between 2 color spaces - [RGB and YIQ][1].
+3. Perform [Histogram Equalization][2] on images.
+4. Perform [Image Quantization][3].
+5. Perform [Gamma correction][4] on Images.
 
-[1]:#convert-an-image-between-YIQ-and-RGB "RGB and YIQ"
-[2]:#Histogram-Equalization "Histogram Equalization"
-[3]:#Image-Quantization "Image Quantization"
-[4]:#Gamma-correction "Gamma correction"
+**The files are as follows:**
+* **ex1_main.py** - The main file script provided in the assignment
+* **myMain.py** - Main file that I created.
+* **ex1_utils.py** - The file that contains functions for these actions:
+  * Convert an image between RGB and YIQ (both sides)
+  * Histogram Equalization
+  * Image Quantization  
+* **gamma.py** - The file that contains the Gamma correction function
+* **Ex1.pdf** - The file with the instructions for this assignment.
+* **README.md** - this file
+* **images** - folder contains the images given plus the once's I added.
+* **output_plots** - folder contains plots of those functions on those images.
 
 _see more about:_  
 [Histogram Equalization - Wikipedia](https://en.wikipedia.org/wiki/Histogram_equalization)  
@@ -33,8 +41,6 @@ Related functions at **_ex1_utils.py_**:
 ![](output_plots/water_bear_3clr_spaces.png)  
 
 [Back to top ][5]
-
-[5]:#Image-Processing-Assignment-1 "Back to top"
 ___
 
 ## Histogram Equalization
@@ -47,14 +53,15 @@ Related functions at **_ex1_utils.py_**:
       2. _histOrg_ -> np.ndarray -> histogram of the original image.
       3. _histEQ_ -> np.ndarray -> histogram of the equalized image.
 
+> In the plots below we can see the difference between an image that was dark and therefore the cumulative sum
+isn't linear. After the equalization, the image has much more light and from the graph, we can see that the cumulative sum is linear.
+
 ![](output_plots/hist_dark_color.png)   
 ![](output_plots/hist_lighthouse_color.png)
 ![](output_plots/hist_penguin_gray.png)
 ![](output_plots/hist_sunset_color.png)
 
 [Back to top ][5]
-
-
 ___
 
 ## Image Quantization
@@ -67,15 +74,14 @@ Related functions at **_ex1_utils.py_**:
    4. **return** - tuple:
       1. _Images_list_ -> List[np.ndarray] -> list of the images after each iteration
       2. _MSE_list_ -> List[float] -> list of the MSE after each iteration
-   
+>The plots below show the difference between an image with 256 intensity levels and an image with less. After the quantization, it’s clear that some intensities were merged and the image contains fewer intensity levels. The graph represents the decrease in the MSE value(Mean Square Error) for each iteration of the quantization action, from the original image to the new image. The iterations are finished when the MSE is converged, or we reached the MAX iterations given (lowest of them).
+
 ![](output_plots/q4_100iter_uluru_color.png)
 ![](output_plots/q6_200iter_beach_color.png)
 ![](output_plots/fewq_uluru_color.png)
 ![](output_plots/fewq_beach_gray.png)
 
 [Back to top ][5]
-
-
 ___
 
 ## Gamma correction
@@ -89,11 +95,20 @@ Related functions at **_ex1_utils.py_**:
       1. _Images_list_ -> List[np.ndarray] -> list of the images after each iteration
       2. _MSE_list_ -> List[float] -> list of the MSE after each iteration
 --- 
+      
 ### Requirements
 
 * The system used to implement this project is Mac OS Monterey 12.3.1
-* Python version is 3.8.9
+* Python version is 3.8.9, using Pycharm.
 * Libraries used:
-  * Open CV
-  * Numpy
-  * Matplotlib
+  - [x] Open CV
+  - [x] Numpy
+  - [x] Matplotlib
+  
+
+
+[1]:#convert-an-image-between-YIQ-and-RGB "RGB and YIQ"
+[2]:#Histogram-Equalization "Histogram Equalization"
+[3]:#Image-Quantization "Image Quantization"
+[4]:#Gamma-correction "Gamma correction"
+[5]:#Image-Processing-Assignment-1 "Back to top"

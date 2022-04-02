@@ -19,6 +19,7 @@ from cv2 import IMREAD_COLOR, IMREAD_GRAYSCALE
 
 gamma_slider_max = 200
 title_window = 'Gamma Correction'
+isColor = False
 img = 0
 # curr_gamma = 0
 # trackbar_name = 'Gamma: %d' % curr_gamma
@@ -34,10 +35,10 @@ def on_trackbar(val: int):
     gammaTable = np.array([((i / float(max_)) ** invGamma) * max_
                            for i in np.arange(0, max_ + 1)]).astype("uint8")
     img_ = cv.LUT(img, gammaTable)
+
     # scaled_img = cv.resize(img_, 960, 540)
     # cv.imshow(title_window, scaled_img)
     cv.imshow(title_window, img_)
-
 
 
 def gammaDisplay(img_path: str, rep: int):
