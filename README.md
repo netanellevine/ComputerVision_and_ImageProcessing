@@ -10,7 +10,7 @@ In this assignment I'll be doing the following:
 5. Perform Gamma correction on Images.
 ____
 
-##Convert an image between YIQ and RGB
+## Convert an image between YIQ and RGB
 
 Related functions at **_ex1_utils.py_**:
 1. **transformRGB2YIQ**
@@ -24,7 +24,7 @@ Related functions at **_ex1_utils.py_**:
 ![](output_plots/water_bear_3clr_spaces.png)
 ___
 
-##Histogram Equalization
+## Histogram Equalization
 
 Related functions at **_ex1_utils.py_**:
 1. **hsitogramEqualize**
@@ -40,7 +40,7 @@ Related functions at **_ex1_utils.py_**:
 ![](output_plots/hist_sunset_color.png)
 ___
 
-##Quantization
+## Quantization
 
 Related functions at **_ex1_utils.py_**:
 1. **quantizeImage**  quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarray], List[float]):
@@ -57,7 +57,7 @@ Related functions at **_ex1_utils.py_**:
 ![](output_plots/fewq_beach_gray.png)
 ___
 
-###Requirements
+### Requirements
 
 * The system used to implement this project is Mac OS Monterey 12.3.1
 * Python version is 3.8.9
