@@ -92,6 +92,10 @@ Related functions at **_gamma.py_**:
    2. **return** - _rep_ -> int - 1 for gray 2 for RGB
 
 
+
+https://user-images.githubusercontent.com/74298433/161400091-f3860682-88a5-4569-a1d8-c7bf4313d6df.mp4
+
+
 --- 
       
 ### Requirements & System preferences
