@@ -31,6 +31,7 @@ Related functions at **_ex1_utils.py_**:
 
 ![](output_plots/sunset_color_spaces.png)
 ![](output_plots/water_bear_3clr_spaces.png)
+[1]:#convert-an-image-between-YIQ-and-RGB "RGB and YIQ"
 ___
 
 ## Histogram Equalization
@@ -69,7 +70,7 @@ ___
 ## Gamma correction
 
 Related functions at **_ex1_utils.py_**:
-1. **quantizeImage**  quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarray], List[float]):
+1. **gammaDisplay**  quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarray], List[float]):
    1. **param** - _imgOrig_ -> np.ndarray
    2. **param** - _nQuant_ -> int -> amount of intensities to quantize.
    3. **param** - _nIter_ -> int -> amount of iterations to perform.
