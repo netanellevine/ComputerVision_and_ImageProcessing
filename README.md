@@ -8,8 +8,8 @@ In this assignment I'll be doing the following:
 4. Perform [Image Quantization][3].
 5. Perform [Gamma correction][4] on Images.  
 
-[1]:#histogram-equalization "RGB and YIQ"
-[2]:#convert-an-image-between-YIQ-and-RGB "Histogram Equalization"
+[1]:#convert-an-image-between-YIQ-and-RGB "RGB and YIQ"
+[2]:#Histogram-Equalization "Histogram Equalization"
 [3]:#Image-Quantization "Image Quantization"
 [4]:#Gamma-correction "Gamma correction"
 
