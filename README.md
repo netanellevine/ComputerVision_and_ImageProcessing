@@ -1,6 +1,5 @@
 # Image Processing Assignment 1
 
------
 This project is the first assignment in the course of the Image Processing and Computer Vision.   
 In this assignment I'll be doing the following:
 1. Read and display an image given.
