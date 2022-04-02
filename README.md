@@ -8,7 +8,7 @@ In this assignment I'll be doing the following:
 4. Perform Image Quantization.
 5. Perform Gamma correction on Images.  
 
-[1]:[--Histogram-Equalization] "Histogram Equalization"  
+[1]:--Histogram-Equalization "Histogram Equalization"  
 
 _see more:_  
 [Histogram Equalization - Wikipedia](https://en.wikipedia.org/wiki/Histogram_equalization)  
