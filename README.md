@@ -3,17 +3,17 @@
 This project is the first assignment in the course of Image Processing and Computer Vision.   
 In this assignment I'll be doing the following:
 1. Read and display an image given.
-2. Convert an image between 2 color spaces - [RGB and YIQ][1].
-3. Perform [Histogram Equalization][2] on images.  
-4. Perform [Image Quantization][3].
-5. Perform [Gamma correction][4] on Images.  
+2. Convert an image between 2 color spaces - [RGB and YIQ][1]. _(ex1_utils.py)_
+3. Perform [Histogram Equalization][2] on images. _(ex1_utils.py)_
+4. Perform [Image Quantization][3]. _(ex1_utils.py)_
+5. Perform [Gamma correction][4] on Images. _(gamma.py)_
 
 [1]:#convert-an-image-between-YIQ-and-RGB "RGB and YIQ"
 [2]:#Histogram-Equalization "Histogram Equalization"
 [3]:#Image-Quantization "Image Quantization"
 [4]:#Gamma-correction "Gamma correction"
 
-_see more:_  
+_see more about:_  
 [Histogram Equalization - Wikipedia](https://en.wikipedia.org/wiki/Histogram_equalization)  
 [Image Quantization - Wikipedia](https://en.wikipedia.org/wiki/Quantization_(image_processing))  
 [Gamma correction - Wikipedia](https://en.wikipedia.org/wiki/Gamma_correction)
@@ -30,8 +30,11 @@ Related functions at **_ex1_utils.py_**:
    2. **return** - _imgRGB_ -> np.ndarray
 
 ![](output_plots/sunset_color_spaces.png)
-![](output_plots/water_bear_3clr_spaces.png)
-[1]:#convert-an-image-between-YIQ-and-RGB "RGB and YIQ"
+![](output_plots/water_bear_3clr_spaces.png)  
+
+[Back to top ][5]
+
+[5]:#Image-Processing-Assignment-1 "Back to top"
 ___
 
 ## Histogram Equalization
