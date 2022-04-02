@@ -1,12 +1,17 @@
 # Image Processing Assignment 1
 
-This project is the first assignment in the course of the Image Processing and Computer Vision.   
+This project is the first assignment in the course of Image Processing and Computer Vision.   
 In this assignment I'll be doing the following:
 1. Read and display an image given.
 2. Convert an image between 2 color spaces - RGB and YIQ.
 3. Perform Histogram Equalization on images.
-4. Perform Quantization on Images.
-5. Perform Gamma correction on Images.
+4. Perform Image Quantization.
+5. Perform Gamma correction on Images.  
+
+_see more:_  
+[Histogram Equalization](https://en.wikipedia.org/wiki/Histogram_equalization)  
+[Image Quantization](https://en.wikipedia.org/wiki/Quantization_(image_processing))  
+[Gamma correction](https://en.wikipedia.org/wiki/Gamma_correction)
 ____
 
 ## Convert an image between YIQ and RGB
