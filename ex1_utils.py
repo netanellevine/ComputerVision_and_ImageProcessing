@@ -139,9 +139,8 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
         YIQimg = transformRGB2YIQ(imOrig)
         tmpImg = YIQimg[:, :, 0]
         isColored = True
-    Orig_copy = tmpImg.copy()
     tmpImg = cv.normalize(tmpImg, None, 0, 255, cv.NORM_MINMAX).astype('uint8')
-    # Orig_copy = tmpImg.copy()
+    Orig_copy = tmpImg.copy()
 
     # Part 1 -> create the first division of borders according to the histogram (goal: equal as possible).
     histOrg = np.histogram(tmpImg.flatten(), bins=256)[0]
@@ -198,7 +197,7 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
         slices.insert(nQuant, 255)
 
         # part 3.4 -> add MSE and check if done.
-        MSE_list.append((np.sqrt((Orig_copy - quantizeImg) ** 2)).mean())
+        MSE_list.append((np.sqrt((Orig_copy*255 - quantizeImg) ** 2)).mean())
         tmpImg = quantizeImg
         images_list.append(quantizeImg / 255)
         if checkMSE(MSE_list, nIter):  # check whether the last 5 MSE values were not changed if so -> break.
