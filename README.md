@@ -91,7 +91,7 @@ Related functions at **_gamma.py_**:
    1. **param** - _img_path_ -> str
    2. **return** - _rep_ -> int - 1 for gray 2 for RGB
 
-
+>The short clips below visualize the effect of the gamma correction on an image. The range is between 0 to 2.
 
 https://user-images.githubusercontent.com/74298433/161400091-f3860682-88a5-4569-a1d8-c7bf4313d6df.mp4
    
@@ -100,7 +100,7 @@ https://user-images.githubusercontent.com/74298433/161400091-f3860682-88a5-4569-
 
 https://user-images.githubusercontent.com/74298433/161400152-239131e9-7510-493a-b4be-89b29fe220f3.mov
 
-
+[Back to top ][5]
 --- 
       
 ### Requirements & System preferences
