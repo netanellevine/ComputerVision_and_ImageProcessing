@@ -4,11 +4,10 @@ This project is the first assignment in the course of Image Processing and Compu
 In this assignment I'll be doing the following:
 1. Read and display an image given.
 2. Convert an image between 2 color spaces - RGB and YIQ.
-3. Perform [Histogram Equalization][1] on images. [--Histogram-Equalization]("Histogram Equalization")  
+3. Perform Histogram Equalization on images. [Histogram-Equalization]("Histogram Equalization")    
 4. Perform Image Quantization.
 5. Perform Gamma correction on Images.  
 
-[1]:--Histogram-Equalization "Histogram Equalization"  
 
 _see more:_  
 [Histogram Equalization - Wikipedia](https://en.wikipedia.org/wiki/Histogram_equalization)  
