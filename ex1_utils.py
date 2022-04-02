@@ -150,12 +150,17 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
     # print(each_slice)
     # print(cumSum)
     slices = [0]
-    m = 1
-    for i in range(255):  # divide it to slices for the first time.
-        if cumSum[i] <= each_slice * m <= cumSum[i + 1]:
-            slices.append(i)
-            # print(f'nQuant={nQuant}, slices={slices}, slices size={len(slices)}')
-            m += 1
+    curr_sum = 0
+    curr_ind = 0
+    for i in range(1, nQuant + 1):  # divide it to slices for the first time.
+        while curr_sum < each_slice and curr_ind < 256:
+            curr_sum += histOrg[curr_ind]
+            curr_ind = curr_ind + 1
+        if slices[-1] != curr_ind - 1:
+            curr_ind = curr_ind - 1
+        slices.append(curr_ind)
+        curr_sum = 0
+
     slices.pop()
     slices.insert(nQuant, 255)
     # print(f'nQuant={nQuant}, slices={slices}, slices size={len(slices)}')
@@ -170,10 +175,15 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
         # part 3.1 -> calculate the intensity average value for each slice
         for j in range(1, nQuant + 1):
             # print(f'j={j}, nQuant={nQuant}, slices={slices}, slices size={len(slices)}')
-            Si = np.array(range(slices[j-1], slices[j]))  # Which intensities levels is within the range of this slice.
-            Pi = histOrg[slices[j-1]:slices[j]]  # How many times those intensities levels appears in the image.
-            avg = int((Si * Pi).sum() / Pi.sum())  # The intensity level that is the average of this slice
-            Qi.append(avg)
+            try:
+                Si = np.array(range(slices[j-1], slices[j]))  # Which intensities levels is within the range of this slice
+                Pi = histOrg[slices[j-1]:slices[j]]  # How many times those intensities levels appears in the image.
+                avg = int((Si * Pi).sum() / Pi.sum())  # The intensity level that is the average of this slice
+                Qi.append(avg)
+            except RuntimeWarning:
+                Qi.append(0)
+            except ValueError:
+                Qi.append(0)
 
         # part 3.2 -> update the @quantizeImg according to the @Qi average values.
         for k in range(nQuant):

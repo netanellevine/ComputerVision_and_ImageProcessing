@@ -65,7 +65,7 @@ def gammaDisplay(img_path: str, rep: int):
 
 
 def main():
-    gammaDisplay('beach.jpg', 2)
+    gammaDisplay('images/beach.jpg', 2)
 
 
 if __name__ == '__main__':

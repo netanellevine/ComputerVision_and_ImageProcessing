@@ -45,8 +45,8 @@ def histEqDemo(img_path: str, rep: int):
 def quantDemo(img_path: str, rep: int):
     img = imReadAndConvert(img_path, rep)
     st = time.time()
-    num2quant = 3
-    num_of_max_iter = 200
+    num2quant = 4
+    num_of_max_iter = 100
     img_lst, err_lst = quantizeImage(img, num2quant, num_of_max_iter)
 
     print("Time:%.2f" % (time.time() - st))
@@ -84,7 +84,7 @@ def quantDemo(img_path: str, rep: int):
     plt.show()
 
     i = 0
-    colors = [2, 4, 8, 16, 23]
+    colors = [2, 4, 8, 16, 32]
     fig, axs = plt.subplots(2, 3, figsize=(7, 4), constrained_layout=True, sharex='all', sharey='all')
     plt.gray()
     fontdict = {'fontsize': 12,
@@ -94,23 +94,22 @@ def quantDemo(img_path: str, rep: int):
             ax.imshow(img)
             ax.set_title("Original image", fontdict=fontdict)
         else:
-            q, err = quantizeImage(img, colors[i], 20)
+            q, err = quantizeImage(img, colors[i], 100)
             ax.imshow(q[i])
             ax.set_title("Quantization of %d" % colors[i], fontdict=fontdict)
             i += 1
     plt.show()
 
 
-
 def main():
     print("ID:", myID())
-    img_path = 'dark.jpg'
+    img_path = 'images/uluru.jpeg'
 
     # Basic read and display
     # imDisplay(img_path, LOAD_GRAY_SCALE)
     # imDisplay(img_path, LOAD_RGB)
-    #
-    # # Convert Color spaces
+
+    # Convert Color spaces
     # rgb_img = imReadAndConvert(img_path, LOAD_RGB)
     # gray_img = imReadAndConvert(img_path, LOAD_GRAY_SCALE)
     # yiq_img = transformRGB2YIQ(rgb_img)
@@ -130,8 +129,8 @@ def main():
     # plt.show()
 
     # # Image histEq
-    histEqDemo(img_path, LOAD_GRAY_SCALE)
-    histEqDemo(img_path, LOAD_RGB)
+    # histEqDemo(img_path, LOAD_GRAY_SCALE)
+    # histEqDemo(img_path, LOAD_RGB)
 
     # Image Quantization
     # quantDemo(img_path, LOAD_GRAY_SCALE)
