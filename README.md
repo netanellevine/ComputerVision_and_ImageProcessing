@@ -86,17 +86,15 @@ ___
 
 ## Gamma correction
 
-Related functions at **_ex1_utils.py_**:
-1. **gammaDisplay**  quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarray], List[float]):
-   1. **param** - _imgOrig_ -> np.ndarray
-   2. **param** - _nQuant_ -> int -> amount of intensities to quantize.
-   3. **param** - _nIter_ -> int -> amount of iterations to perform.
-   4. **return** - tuple:
-      1. _Images_list_ -> List[np.ndarray] -> list of the images after each iteration
-      2. _MSE_list_ -> List[float] -> list of the MSE after each iteration
+Related functions at **_gamma.py_**:
+1. **gammaDisplay** 
+   1. **param** - _img_path_ -> str
+   2. **return** - _rep_ -> int - 1 for gray 2 for RGB
+
+
 --- 
       
-### Requirements
+### Requirements & System preferences
 
 * The system used to implement this project is Mac OS Monterey 12.3.1
 * Python version is 3.8.9, using Pycharm.
