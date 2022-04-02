@@ -11,6 +11,7 @@ In this assignment I'll be doing the following:
 ____
 
 ##Convert an image between YIQ and RGB
+
 Related functions at **_ex1_utils.py_**:
 1. **transformRGB2YIQ**
    1. **param** - _imgRGB_ -> np.ndarray
@@ -22,7 +23,9 @@ Related functions at **_ex1_utils.py_**:
 ![](output_plots/sunset_color_spaces.png)
 ![](output_plots/water_bear_3clr_spaces.png)
 ___
+
 ##Histogram Equalization
+
 Related functions at **_ex1_utils.py_**:
 1. **hsitogramEqualize**
    1. **param** - _imgOrig_ -> np.ndarray
@@ -36,7 +39,9 @@ Related functions at **_ex1_utils.py_**:
 ![](output_plots/hist_penguin_gray.png)
 ![](output_plots/hist_sunset_color.png)
 ___
+
 ##Quantization
+
 Related functions at **_ex1_utils.py_**:
 1. **quantizeImage**  quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarray], List[float]):
    1. **param** - _imgOrig_ -> np.ndarray
@@ -51,7 +56,9 @@ Related functions at **_ex1_utils.py_**:
 ![](output_plots/fewq_uluru_color.png)
 ![](output_plots/fewq_beach_gray.png)
 ___
+
 ###Requirements
+
 * The system used to implement this project is Mac OS Monterey 12.3.1
 * Python version is 3.8.9
 * Libraries used:
