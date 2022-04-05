@@ -27,7 +27,7 @@ _see more about:_
 [Gamma correction - Wikipedia](https://en.wikipedia.org/wiki/Gamma_correction)
 ____
 
-## Convert an image between YIQ and RGB
+## Convert an image between YIQ and RGB color spaces
 
 Related functions at **_ex1_utils.py_**:
 1. **transformRGB2YIQ**
@@ -54,7 +54,7 @@ Related functions at **_ex1_utils.py_**:
       3. _histEQ_ -> np.ndarray -> histogram of the equalized image.
 
 > In the plots below we can see the difference between an image that was dark and therefore the cumulative sum
-isn't linear. After the equalization, the image has much more light and from the graph, we can see that the cumulative sum is linear.
+isn't linear to an image that was equalized so the cumulative sum is linear. After the equalization, the image has much more light and from the graph, we can see that the cumulative sum is linear.
 
 ![](output_plots/hist_dark_color.png)   
 ![](output_plots/hist_lighthouse_color.png)
@@ -91,7 +91,8 @@ Related functions at **_gamma.py_**:
    1. **param** - _img_path_ -> str
    2. **return** - _rep_ -> int - 1 for gray 2 for RGB
 
->The short clips below visualize the effect of the gamma correction on an image. The range is between 0 to 2.
+>The short clips below visualize the effect of the gamma correction on an image.  
+> The range is between 0 to 2, dragging the bar to the left side (towards the 0) will brighten the image, and correspondingly dragging to the left side (towards the 1) will darken the image.
 
 https://user-images.githubusercontent.com/74298433/161400091-f3860682-88a5-4569-a1d8-c7bf4313d6df.mp4
    
